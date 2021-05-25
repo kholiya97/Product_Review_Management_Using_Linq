@@ -1,5 +1,4 @@
-﻿using Product_Review_Management;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -53,6 +52,7 @@ namespace Product_Review_Management_Using_Linq
                 new ProductReview() { ProductId = 25, UserId = 12, Rating = 3, Review = "Average", isLike = false },
             };
             ReviewTable.AddDataIntoDataTable();
+            ReviewTable.RetrieveRecordWithTrueIsLike();
             Console.ReadLine();
         }
     }
