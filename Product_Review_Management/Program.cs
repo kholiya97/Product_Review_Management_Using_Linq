@@ -52,7 +52,7 @@ namespace Product_Review_Management_Using_Linq
                 new ProductReview() { ProductId = 25, UserId = 12, Rating = 3, Review = "Average", isLike = false },
             };
             ReviewTable.AddDataIntoDataTable();
-            ReviewTable.RetrieveRecordWithTrueIsLike();
+            ReviewTable.FindAverageRatingOfTheEachProductId();
             Console.ReadLine();
         }
     }
