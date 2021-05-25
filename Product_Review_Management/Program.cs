@@ -51,13 +51,27 @@ namespace Product_Review_Management_Using_Linq
                 new ProductReview() { ProductId = 24, UserId = 8, Rating = 2, Review = "Bad", isLike = true },
                 new ProductReview() { ProductId = 25, UserId = 12, Rating = 3, Review = "Average", isLike = false },
             };
-            foreach (var list in productReviewlist)
-            {
-                Console.WriteLine("Product Id :" + list.ProductId + "\t" + "User Id :" + list.UserId + "\t" + "Rating :" + list.Rating + "\t" + "Review :" + list.Review + "\t" + "Is Like :" + list.isLike);
-            }
+            ProductManagement.RetrieveTopThreeRatedRecords(productReviewlist);
             Console.ReadLine();
         }
     }
+    class ProductManagement
+    {
+
+        //********** UC2******
+        // Retrieve top 3 records from the list who’s rating is high using LINQ
+
+        public static void RetrieveTopThreeRatedRecords(List<ProductReview> list)
+        {
+            //using Query Syntax
+            var recordedData = (from products in list orderby products.Rating descending select products).Take(3);
+            foreach (var productReview in recordedData)
+            {
+                Console.WriteLine("Product Id :" + productReview.ProductId + "\t" + "User Id :" + productReview.UserId + "\t" + "Rating :" + productReview.Rating + "\t" + "Review :" + productReview.Review + "\t" + "Is Like :" + productReview.isLike);
+            }
+        }
+    }
 }
+
 
 
