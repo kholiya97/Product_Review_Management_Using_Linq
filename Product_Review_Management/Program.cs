@@ -51,27 +51,30 @@ namespace Product_Review_Management_Using_Linq
                 new ProductReview() { ProductId = 24, UserId = 8, Rating = 2, Review = "Bad", isLike = true },
                 new ProductReview() { ProductId = 25, UserId = 12, Rating = 3, Review = "Average", isLike = false },
             };
-            ProductManagement.RetrieveCountOfReviewForEachProductId(productReviewlist);
+            ProductManagement.RetrieveProductIDAndReviewOfAllRecords(productReviewlist);
             Console.ReadLine();
         }
     }
+
+        
 
 
 
     class ProductManagement
     {
 
-
-
-        //********** UC4******
-        // UC4 Retrieves the count of reviews for each productID.
-        public static void RetrieveCountOfReviewForEachProductId(List<ProductReview> list)
+        //********** UC5******
+        // UC5 Retrieves only the product id and review of all records.
+        public static void RetrieveProductIDAndReviewOfAllRecords(List<ProductReview> list)
         {
-            var recordedData = (list.GroupBy(p => p.ProductId).Select(x => new { ProductId = x.Key, Count = x.Count() }));
-            Console.WriteLine("\n Count group by ProductId");
+            //using Query Syntax
+            var recordedData = (from products in list
+                                select new { ProductId = products.ProductId, Review = products.Review });
+
+            Console.WriteLine("\n Retrieving Product and Review from list");
             foreach (var productReview in recordedData)
             {
-                Console.WriteLine("ProductId : " + productReview.ProductId + "  Count : " + productReview.Count);
+                Console.WriteLine("Product ID : " + productReview.ProductId + "\t" + "Review : " + productReview.Review);
             }
         }
     }
