@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Product_Review_Management_Using_Linq
 {
-    
+
     public class ProductReview
     {
         public int ProductId { get; set; }
@@ -36,13 +36,13 @@ namespace Product_Review_Management_Using_Linq
                 new ProductReview() { ProductId = 5, UserId = 6, Rating = 2, Review = "Bad",      isLike = true },
                 new ProductReview() { ProductId = 6, UserId = 7, Rating = 1, Review = "Very Bad", isLike = true },
                 new ProductReview() { ProductId = 6, UserId = 7, Rating = 3, Review = "Average",  isLike = true },
-                new ProductReview() { ProductId = 12, UserId = 4, Rating = 1, Review = "Very Bad", isLike = true }, 
-                new ProductReview() { ProductId = 13, UserId = 48, Rating = 0, Review = "Excellent", isLike = false }, 
-                new ProductReview() { ProductId = 14, UserId =41, Rating = 3, Review = "Average", isLike = true }, 
-                new ProductReview() { ProductId = 15, UserId = 51, Rating = 4, Review = "Nice", isLike = true }, 
+                new ProductReview() { ProductId = 12, UserId = 4, Rating = 1, Review = "Very Bad", isLike = true },
+                new ProductReview() { ProductId = 13, UserId = 48, Rating = 0, Review = "Excellent", isLike = false },
+                new ProductReview() { ProductId = 14, UserId =41, Rating = 3, Review = "Average", isLike = true },
+                new ProductReview() { ProductId = 15, UserId = 51, Rating = 4, Review = "Nice", isLike = true },
                 new ProductReview() { ProductId = 16, UserId = 8, Rating = 1, Review = "Very Bad", isLike = false },
                 new ProductReview() { ProductId = 17, UserId = 18, Rating = 6, Review = "Excellent", isLike = true },
-                new ProductReview() { ProductId = 18, UserId = 9, Rating = 5, Review = "Good", isLike = true }, 
+                new ProductReview() { ProductId = 18, UserId = 9, Rating = 5, Review = "Good", isLike = true },
                 new ProductReview() { ProductId = 19, UserId = 10, Rating = 4, Review = "Nice", isLike = false },
                 new ProductReview() { ProductId = 20, UserId = 7, Rating = 3, Review = "Average", isLike = true },
                 new ProductReview() { ProductId = 21, UserId = 6, Rating = 2, Review = "Bad", isLike = true },
@@ -51,27 +51,30 @@ namespace Product_Review_Management_Using_Linq
                 new ProductReview() { ProductId = 24, UserId = 8, Rating = 2, Review = "Bad", isLike = true },
                 new ProductReview() { ProductId = 25, UserId = 12, Rating = 3, Review = "Average", isLike = false },
             };
-            ProductManagement.RetrieveTopThreeRatedRecords(productReviewlist);
+            ProductManagement.RetrieveCountOfReviewForEachProductId(productReviewlist);
             Console.ReadLine();
         }
     }
+
+
+
     class ProductManagement
     {
 
-        //********** UC2******
-        // Retrieve top 3 records from the list who’s rating is high using LINQ
 
-        public static void RetrieveTopThreeRatedRecords(List<ProductReview> list)
+
+        //********** UC4******
+        // UC4 Retrieves the count of reviews for each productID.
+        public static void RetrieveCountOfReviewForEachProductId(List<ProductReview> list)
         {
-            //using Query Syntax
-            var recordedData = (from products in list orderby products.Rating descending select products).Take(3);
+            var recordedData = (list.GroupBy(p => p.ProductId).Select(x => new { ProductId = x.Key, Count = x.Count() }));
+            Console.WriteLine("\n Count group by ProductId");
             foreach (var productReview in recordedData)
             {
-                Console.WriteLine("Product Id :" + productReview.ProductId + "\t" + "User Id :" + productReview.UserId + "\t" + "Rating :" + productReview.Rating + "\t" + "Review :" + productReview.Review + "\t" + "Is Like :" + productReview.isLike);
+                Console.WriteLine("ProductId : " + productReview.ProductId + "  Count : " + productReview.Count);
             }
         }
     }
 }
-
 
 
